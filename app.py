@@ -1,7 +1,8 @@
 import pandas as pd
 import io
 import streamlit as st
-import XlsxWriter
+
+import openpyxl
 #%%
 
 
@@ -56,7 +57,7 @@ if uploaded_file is not None:
 	st.dataframe(data)
 	# 将data存入excel
 	output = io.BytesIO()
-	with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+	with pd.ExcelWriter(output, engine='openpyxl') as writer:
 		data.to_excel(writer, index=False)
 		writer.save()
 	# 放置一个下载按钮，用于下载处理后的excel文件
