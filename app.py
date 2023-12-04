@@ -52,23 +52,20 @@ def process_excel(uploaded_file):
 uploaded_file = st.file_uploader("上传xls或xlsx文件", type=["xls", "xlsx"])
 # 如果上传文件不为空，就将上传的文件给process_excel处理
 if uploaded_file is not None:
-	data = process_excel(uploaded_file)
-	# 将处理后的data显示在页面上
-	st.dataframe(data)
-	# 将data存入excel
-	output = io.BytesIO()
-	with pd.ExcelWriter(output, engine='openpyxl') as writer:
-		data.to_excel(writer, index=False)
-		writer.save()
-	# 放置一个下载按钮，用于下载处理后的excel文件
-	st.download_button(
-		label="下载处理后的excel文件",
-		data=output,
-		file_name='匹配后的表格.xlsx',
-		mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-	)
-
-
+    data = process_excel(uploaded_file)
+    # 将处理后的data显示在页面上
+    st.dataframe(data)
+    # 将data存入excel
+    output = io.BytesIO()
+    with pd.ExcelWriter(output, engine='openpyxl') as writer:
+        data.to_excel(writer, index=False)
+    # 放置一个下载按钮，用于下载处理后的excel文件
+    st.download_button(
+        label="下载处理后的excel文件",
+        data=output.getvalue(),
+        file_name='匹配后的表格.xlsx',
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
 
 
 
